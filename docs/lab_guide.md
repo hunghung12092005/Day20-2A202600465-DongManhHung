@@ -22,7 +22,11 @@ File gợi ý:
 - `src/multi_agent_research_lab/cli.py`
 - `src/multi_agent_research_lab/services/llm_client.py`
 
-TODO(student): thay baseline placeholder bằng một call LLM thật.
+Việc cần có:
+
+- Baseline gọi một `LLMClient` duy nhất để trả lời trọn vẹn câu hỏi.
+- Có fallback cục bộ nếu thiếu API key hoặc provider không phản hồi.
+- Ghi trace hoặc metadata tối thiểu về token/cost nếu có.
 
 ## Milestone 2: Supervisor
 
@@ -30,8 +34,6 @@ File gợi ý:
 
 - `src/multi_agent_research_lab/agents/supervisor.py`
 - `src/multi_agent_research_lab/graph/workflow.py`
-
-TODO(student): implement routing policy.
 
 Gợi ý câu hỏi thiết kế:
 
@@ -49,7 +51,11 @@ File gợi ý:
 - `agents/analyst.py`
 - `agents/writer.py`
 
-TODO(student): implement từng worker.
+Việc cần có:
+
+- `Researcher` lấy nguồn và tạo `research_notes`
+- `Analyst` rút insight, trade-off, weak evidence
+- `Writer` tổng hợp câu trả lời cuối có nguồn tham chiếu
 
 ## Milestone 4: Trace và benchmark
 
@@ -68,6 +74,9 @@ Benchmark tối thiểu:
 | Quality | rubric 0-10 do peer review |
 | Citation coverage | số claims có source / tổng claims chính |
 | Failure rate | số query fail / tổng query |
+
+Trong repo hoàn chỉnh này, benchmark report được sinh tại `reports/benchmark_report.md`
+và trace JSON nằm trong `reports/traces/`.
 
 ## Exit ticket
 

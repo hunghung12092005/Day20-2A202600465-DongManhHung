@@ -1,8 +1,9 @@
 """Supervisor / router skeleton."""
 
 from multi_agent_research_lab.agents.base import BaseAgent
-from multi_agent_research_lab.core.errors import StudentTodoError
+from multi_agent_research_lab.core.config import Settings, get_settings
 from multi_agent_research_lab.core.state import ResearchState
+from multi_agent_research_lab.observability.tracing import trace_span
 
 
 class SupervisorAgent(BaseAgent):
@@ -10,13 +11,33 @@ class SupervisorAgent(BaseAgent):
 
     name = "supervisor"
 
+    def __init__(self, settings: Settings | None = None) -> None:
+        self.settings = settings or get_settings()
+
     def run(self, state: ResearchState) -> ResearchState:
-        """Update `state.route_history` with the next route.
+        """Update `state.route_history` with the next route."""
 
-        TODO(student): Implement routing policy. Suggested steps:
-        - Inspect request, current notes, and missing fields.
-        - Choose one of: researcher, analyst, writer, done.
-        - Enforce max iterations and failure fallback.
-        """
-
-        raise StudentTodoError("TODO(student): implement SupervisorAgent.run")
+        with trace_span("supervisor", {"query": state.request.query, "iteration": state.iteration + 1}) as span:
+            if state.iteration >= self.settings.max_iterations:
+                route = "done" if state.final_answer else "writer"
+            elif not state.sources or not state.research_notes:
+                route = "researcher"
+            elif not state.analysis_notes:
+                route = "analyst"
+            elif not state.final_answer:
+                route = "writer"
+            else:
+                route = "done"
+            span["attributes"]["selected_route"] = route
+        state.record_route(route)
+        state.add_trace_event(
+            "supervisor.route",
+            {
+                "iteration": state.iteration,
+                "selected_route": route,
+                "has_sources": bool(state.sources),
+                "has_analysis": state.analysis_notes is not None,
+                "has_final_answer": state.final_answer is not None,
+            },
+        )
+        return state

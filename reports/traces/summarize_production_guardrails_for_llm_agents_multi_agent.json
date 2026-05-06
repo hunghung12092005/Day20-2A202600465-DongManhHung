@@ -1,0 +1,87 @@
+[
+  {
+    "name": "supervisor.route",
+    "payload": {
+      "iteration": 1,
+      "selected_route": "researcher",
+      "has_sources": false,
+      "has_analysis": false,
+      "has_final_answer": false
+    }
+  },
+  {
+    "name": "researcher.completed",
+    "payload": {
+      "name": "researcher",
+      "attributes": {
+        "query": "Summarize production guardrails for LLM agents",
+        "source_count": 5
+      },
+      "duration_seconds": 26.97732330100007
+    }
+  },
+  {
+    "name": "supervisor.route",
+    "payload": {
+      "iteration": 2,
+      "selected_route": "analyst",
+      "has_sources": true,
+      "has_analysis": false,
+      "has_final_answer": false
+    }
+  },
+  {
+    "name": "analyst.completed",
+    "payload": {
+      "name": "analyst",
+      "attributes": {
+        "query": "Summarize production guardrails for LLM agents"
+      },
+      "duration_seconds": 11.667790120999598
+    }
+  },
+  {
+    "name": "supervisor.route",
+    "payload": {
+      "iteration": 3,
+      "selected_route": "writer",
+      "has_sources": true,
+      "has_analysis": true,
+      "has_final_answer": false
+    }
+  },
+  {
+    "name": "writer.completed",
+    "payload": {
+      "name": "writer",
+      "attributes": {
+        "query": "Summarize production guardrails for LLM agents"
+      },
+      "duration_seconds": 1.968500055227196e-05
+    }
+  },
+  {
+    "name": "critic.completed",
+    "payload": {
+      "name": "critic",
+      "payload": {
+        "citation_coverage": 1.0
+      }
+    }
+  },
+  {
+    "name": "workflow.completed",
+    "payload": {
+      "name": "workflow",
+      "payload": {
+        "iterations": 3,
+        "route_history": [
+          "researcher",
+          "analyst",
+          "writer"
+        ],
+        "error_count": 0
+      }
+    }
+  }
+]

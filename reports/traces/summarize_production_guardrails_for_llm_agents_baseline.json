@@ -1,0 +1,13 @@
+[
+  {
+    "name": "baseline.completed",
+    "payload": {
+      "name": "baseline",
+      "payload": {
+        "input_tokens": 42,
+        "output_tokens": 474,
+        "cost_usd": 0.000291
+      }
+    }
+  }
+]
